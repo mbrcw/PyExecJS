@@ -110,7 +110,7 @@ class ExternalRuntime(AbstractRuntime):
 
         def _exec_with_tempfile(self, source):
             (fd, filename) = tempfile.mkstemp(prefix='execjs', suffix='.js')
-            os.close(fd)
+            #os.close(fd)
             try:
                 with io.open(filename, "w+", encoding=self._runtime._encoding) as fp:
                     fp.write(self._compile(source))
