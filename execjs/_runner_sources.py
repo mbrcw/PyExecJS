@@ -9,6 +9,12 @@ Node = r"""(function(program, execJS) { execJS(program) })(function() { #{source
   var print = function(string) {
     process.stdout.write('' + string + '\n');
   };
+  var replacer = function(key, value){
+    if (value instanceof Set) {
+        return "{"+ Array.from(value).join(', ') +"}";
+    }
+    return value;
+  };
   try {
     result = program();
     print('')
@@ -16,7 +22,7 @@ Node = r"""(function(program, execJS) { execJS(program) })(function() { #{source
       print('["ok"]');
     } else {
       try {
-        print(JSON.stringify(['ok', result]));
+        print(JSON.stringify(['ok', result], replacer));
       } catch (err) {
         print('["err"]');
       }
